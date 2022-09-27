@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String NOMBRE = "NOMBRE";
     public static final int COD_IDEN = 24;
     Button btnlanzar;
+    Button btnlanzarcolor;
     EditText txtNombre;
 
     @Override
@@ -24,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
             String numero = data.getStringExtra(SaludoActivity.NUMERO);
             txtNombre.setText(txtNombre.getText() + " " + numero);
         }
+        else {
+            String color = data.getStringExtra(ColorActivity.COLOR);
+            txtNombre.setText(txtNombre.getText() + " " + color);
+        }
     }
 
     @Override
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnlanzar = findViewById(R.id.buttonLanzar);
+        btnlanzarcolor = findViewById(R.id.buttonColor);
         txtNombre = findViewById(R.id.editTextNombre);
 
         btnlanzar.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
 
                 //startActivity(intento);
 
+            }
+        });
+
+        btnlanzarcolor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intento = new Intent(MainActivity.this, ColorActivity.class);
+                intento.putExtra(NOMBRE, txtNombre.getText().toString());
+                startActivityForResult(intento, COD_IDEN);
             }
         });
 
