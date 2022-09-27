@@ -1,5 +1,6 @@
 package com.example.jugandoconaplicaciones;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,8 +12,19 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     public static final String NOMBRE = "NOMBRE";
+    public static final int COD_IDEN = 24;
     Button btnlanzar;
     EditText txtNombre;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == COD_IDEN && resultCode == RESULT_OK){
+            String numero = data.getStringExtra(SaludoActivity.NUMERO);
+            txtNombre.setText(txtNombre.getText() + " " + numero);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +38,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intento = new Intent(MainActivity.this, SaludoActivity.class);
                 intento.putExtra(NOMBRE, txtNombre.getText().toString());
-                startActivity(intento);
+                startActivityForResult(intento, COD_IDEN);
+
+
+                //startActivity(intento);
+
             }
         });
 
